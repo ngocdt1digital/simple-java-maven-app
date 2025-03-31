@@ -1,27 +1,48 @@
 pipeline {
     agent any
+    tools{
+        maven 'My-Maven3.9'
+    }
     options {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Build') {
+        stage('init'){
             steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
+                scripts {
+                    gv = load "scirpt.groovy"
                 }
             }
         }
-        stage('Deliver') { 
+        
+        stage('Build jar') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                script {
+                    gv.buildJar()
+                }
+            }
+        }
+        stage('Run Test') {
+            steps {
+                script {
+                    gv.runTest()
+                }
+            }
+        }
+
+        stage('Build image') { 
+            steps {
+                script {
+                    gv.buillImage
+                }
+            }
+        }
+
+        stage('Deployment') {
+            steps {
+                script {
+                    gv.deployApp
+                }
             }
         }
     }
