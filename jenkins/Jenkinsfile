@@ -3,9 +3,9 @@ pipeline {
     tools{
         maven 'MyMaven3.9'
     }
-    options {
-        skipStagesAfterUnstable()
-    }
+    // options {
+    //     skipStagesAfterUnstable()
+    // }
     stages {
         stage('Load Script') {
             steps {
