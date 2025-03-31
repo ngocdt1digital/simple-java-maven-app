@@ -7,10 +7,10 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('init'){
+        stage('Load Script') {
             steps {
-                scripts {
-                    gv = load "scirpt.groovy"
+                script {
+                    gv = load "script.groovy"
                 }
             }
         }
