@@ -17,7 +17,7 @@ def buildImage() {
     echo 'Buil image the docker and push docker hub...'
     withCredentials([usernamePassword(credentialsId: 'login_docker_hub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         try {
-            sh 'docker build -t ngocdt1/simple-java-maven-app:ver-${BUILD_ID} .'
+            sh 'docker build -t ngocdt1/simple-java-maven-app:ver-${BUILD_ID} -f ${WORKSPACE}/jenkins/Dockerfile .'
             sh 'echo $PASS | docker login -u $USER --password-stdin'
             sh 'docker push ngocdt1/simple-java-maven-app:ver-${BUILD_ID}'
             echo 'Docker images push success!'
