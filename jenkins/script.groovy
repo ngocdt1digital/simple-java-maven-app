@@ -1,23 +1,16 @@
 def buildJar() {
     echo 'Build the application...'
-    sh 'mvn package'
+    sh 'mvn -B -DskipTests clean package'
 }
 
 def runTest() {
     echo 'Run test and collect report...'
     try {
+        echo 'Running tests and collecting reports...'
         sh 'mvn test'
-    }finally {
-        publishTestResults()
-    }   
-}
-
-def publishTestResults() {
-    try {
+    } finally {
         junit 'target/surefire-reports/*.xml'
-    }catch (Exception e) {
-        echo "JUnit report collection failed: ${e.message}"
-    }
+    }  
 }
 
 def buillImage() {
