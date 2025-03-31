@@ -13,7 +13,7 @@ def runTest() {
     }  
 }
 
-def buillImage() {
+def buildImage() {
     echo 'Buil image the docker and push docker hub...'
     withCredentials([usernamePassword(credentialsId: 'login_docker_hub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         try {
